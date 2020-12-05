@@ -118,6 +118,8 @@ Let people know how they can contribute into your project. A contributing guidel
 
 Give proper credits. This could be a link to any repo which inspired you to build this project, any blogposts or links to people who contrbuted in this project. 
 
+[Video tutorial](https://www.youtube.com/watch?v=OcWMQPPOq-0)
+
 ## License
 
 MIT © [Yourname]()
