@@ -7,7 +7,16 @@ func homePage(w http.ResponseWriter, r *http.Request)  {
 	fmt.Fprintf(w, "Go is a super lang!")
 }
 
-func main()  {
+func contactsPage(w http.ResponseWriter, r *http.Request)  {
+	fmt.Fprintf(w, "Contacts page")
+}
+
+func handleRequest()  {
 	http.HandleFunc("/", homePage)
+	http.HandleFunc("/contacts/", contactsPage)
 	http.ListenAndServe(":5000", nil)
+}
+
+func main()  {
+	handleRequest()
 }
