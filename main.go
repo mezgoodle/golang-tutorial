@@ -1,29 +1,30 @@
 package main
 
-import ("fmt" 
-		"net/http")
+import ("fmt"; "net/http"; "html/template")
 
 // User model
 type User struct {
-	name string
-	age uint16
-	money int16
-	avgGrades, happiness float64
+	Name string
+	Age uint16
+	Money int16
+	AvgGrades, Happiness float64
 }
 
 func (u User) getAllInfo() string {
 	return fmt.Sprintf("User name is: %s. He is %d and" +
-	 "he has %d dollars", u.name, u.age, u.money)
+	 "he has %d dollars", u.Name, u.Age, u.Money)
 }
 
 func (u *User) setNewName(name string) {
-	u.name = name
+	u.Name = name
 }
 
 func homePage(w http.ResponseWriter, r *http.Request)  {
 	bob := User{"Bob", 24, -50, 4.2, 0.8}
 	bob.setNewName("Max")
-	fmt.Fprintf(w, bob.getAllInfo())
+	// fmt.Fprintf(w, bob.getAllInfo())
+	template, _ := template.ParseFiles("templates/home_page.html")
+	template.Execute(w, bob)
 }
 
 func contactsPage(w http.ResponseWriter, r *http.Request)  {
