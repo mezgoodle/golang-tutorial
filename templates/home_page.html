@@ -12,6 +12,14 @@
     <span>Hello Max</span>
     {{ end }}
 
+    <ul>
+        {{ range .Hobbies }}
+            <li><strong>{{ . }}</strong></li>
+        {{ else }}
+            <li>List is empty</li>
+        {{ end }}
+    </ul>
+
     <h1>Main page</h1>
     <p>User: {{.Name}}</p>
     <p>Age: {{.Age}}</p>
