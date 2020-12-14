@@ -58,5 +58,20 @@ func main()  {
 	}
 	defer insert.Close()
 
+	//Query data
+	res, err := db.Query("SELECT * from `users`")
+	if err != nil {
+		panic(err)
+	}
+
+	for res.Next() {
+		var user User
+		err = res.Scan(&user.Name, &user.Age)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(fmt.Sprintf("User: %s with age %d", user.Name, user.Age))
+	}
+
 	fmt.Println("Connected")
 }
