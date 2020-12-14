@@ -4,8 +4,8 @@ import ("fmt"; "net/http"; "html/template"; "database/sql"; "github.com/go-sql-d
 
 // User model
 type User struct {
-	Name string
-	Age uint16
+	Name string `json:"name"`
+	Age uint16 `json:"age"`
 	Money int16
 	AvgGrades, Happiness float64
 	Hobbies []string
@@ -43,4 +43,20 @@ func main()  {
 	// bob := User{name: "Bob", age: 24, money: -50, avgGrades: 4.2, happiness: 0.8}
 
 	handleRequest()
+
+	db, err := sql.Open("mysql", "login:password@tcp(127.0.0.1:3306)/dbname")
+	if err != nil {
+		panic(err)
+	}
+
+	defer db.Close()
+
+	// Add data
+	insert, err := db.Query("INSERT INTO `users` (`name`, `age`) VALUES (`Alex`, 25)")
+	if err != nil {
+		panic(err)
+	}
+	defer insert.Close()
+
+	fmt.Println("Connected")
 }
