@@ -1,6 +1,6 @@
 package main
 
-import ("fmt"; "net/http"; "html/template")
+import ("fmt"; "net/http"; "html/template"; "database/sql"; "github.com/go-sql-driver/mysql")
 
 // User model
 type User struct {
