@@ -11,6 +11,7 @@ func index(w http.ResponseWriter, r *http.Request)  {
 }
 
 func handleRequest()  {
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":5000", nil)
 }
