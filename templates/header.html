@@ -1,3 +1,5 @@
+{{ define "header" }}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,36 +21,4 @@
           </nav>
         </div>
       </header>
-    
-      <main class="px-3">
-        <h1>Home page.</h1>
-        <p class="lead">User: {{.Name}}<br>Age: {{.Age}<br>Money: {{.Money}}</p>
-
-        {{ if eq .Name "Bob" }}
-        <p class="lead">Hello Bob</p>
-        {{ else }}
-        <p class="lead">Hello Max</p>
-        {{ end }}
-    
-
-        {{ range .Hobbies }}
-            <p class="lead"><strong>{{ . }}</strong></p>
-        {{ else }}
-            <p class="lead">List is empty</p>
-        {{ end }}
-
-
-        <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
-        </p>
-      </main>
-    
-      <footer class="mt-auto text-white-50">
-        <p>Cover template for <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
-      </footer>
-    </div>
-    
-    
-        
-</body>
-</html>
+{{ end }}
