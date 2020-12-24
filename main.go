@@ -10,9 +10,18 @@ func index(w http.ResponseWriter, r *http.Request)  {
 	template.ExecuteTemplate(w, "index", nil)
 }
 
+func create(w http.ResponseWriter, r *http.Request)  {
+	template, err := template.ParseFiles("templates/create.html", "templates/header.html", "templates/footer.html")
+	if err != nil {
+		fmt.Fprintf(w, err.Error())
+	}
+	template.ExecuteTemplate(w, "create", nil)
+}
+
 func handleRequest()  {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
 	http.HandleFunc("/", index)
+	http.HandleFunc("/create", index)
 	http.ListenAndServe(":5000", nil)
 }
 
