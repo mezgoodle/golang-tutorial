@@ -23,20 +23,24 @@ func saveArticle(w http.ResponseWriter, r *http.Request)  {
 	anons := r.FormValue("anons")
 	fullText := r.FormValue("full_text")
 
-	db, err := sql.Open("mysql", "login:password@tcp(127.0.0.1:3306)/dbname")
-	if err != nil {
-		panic(err)
+	if title == "" || anons == "" || fullText == "" {
+		fmt.Fprintf(w, "Enter every data")
+	} else {
+		db, err := sql.Open("mysql", "login:password@tcp(127.0.0.1:3306)/dbname")
+		if err != nil {
+			panic(err)
+		}
+	
+		defer db.Close()
+	
+		insert, err := db.Query(fmt.Sprintf("INSERT INTO `articles` (`title`, `anons`, `full_text`) VALUES ('%s', '%s', '%s')", title, anons, fullText))
+		if err != nil {
+			panic(err)
+		}
+		defer insert.Close()
+	
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
-
-	defer db.Close()
-
-	insert, err := db.Query(fmt.Sprintf("INSERT INTO `articles` (`title`, `anons`, `full_text`) VALUES ('%s', '%s', '%s')", title, anons, fullText))
-	if err != nil {
-		panic(err)
-	}
-	defer insert.Close()
-
-	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 
