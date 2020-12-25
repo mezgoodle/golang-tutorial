@@ -2,17 +2,19 @@ package main
 
 import ("fmt"; "net/http"; "html/template"; "database/sql"; "github.com/go-sql-driver/mysql")
 
+// Article struct
 type Article struct {
-	Id uint16
+	ID uint16
 	Title, Anons, FullText string
 }
+
+var posts  = []Article
 
 func index(w http.ResponseWriter, r *http.Request)  {
 	template, err := template.ParseFiles("templates/index.html", "templates/header.html", "templates/footer.html")
 	if err != nil {
 		fmt.Fprintf(w, err.Error())
 	}
-	template.ExecuteTemplate(w, "index", nil)
 
 	db, err := sql.Open("mysql", "login:password@tcp(127.0.0.1:3306)/dbname")
 	if err != nil {
@@ -25,15 +27,17 @@ func index(w http.ResponseWriter, r *http.Request)  {
 	if err != nil {
 		panic(err)
 	}
-
+	posts = []Article{}
 	for res.Next() {
 		var post Article
-		err = res.Scan(&post.Id, &post.Title, &post.Anons, &post.FullText)
+		err = res.Scan(&post.ID, &post.Title, &post.Anons, &post.FullText)
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(fmt.Sprintf("Post: %s with id: %d", post.Title, post.Id))
+		posts = append(posts, post)
 	}
+
+	template.ExecuteTemplate(w, "index", posts)
 }
 
 func create(w http.ResponseWriter, r *http.Request)  {

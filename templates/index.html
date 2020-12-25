@@ -6,6 +6,16 @@
   <h1>Home page.</h1>
   <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro laudantium perspiciatis nemo laboriosam, doloribus possimus ullam a cum facere quod?</p>
 
+  {{ range . }}
+  <div class="alert alert-danger">
+    <h2>{{ .Title }}</h2>
+    <p>{{ .Anons }}</p>
+    <a href="/post/{{ .Id }}" class="btn btn-danger">Read more</a>
+  </div>
+  {{ else }}
+  <p class="lead">There are not articles</p>
+  {{ end }}
+
   <p class="lead">
     <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Learn more</a>
   </p>
