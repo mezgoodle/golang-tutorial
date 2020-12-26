@@ -72,9 +72,32 @@ func saveArticle(w http.ResponseWriter, r *http.Request)  {
 }
 
 func showPost(w http.ResponseWriter, r *http.Request) {
+	var showPost = Article{}
+	template, err := template.ParseFiles("templates/show.html", "templates/header.html", "templates/footer.html")
+
 	vars := mux.Vars(r)
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, "Category: %v\n", vars["category"]) 
+	db, err := sql.Open("mysql", "login:password@tcp(127.0.0.1:3306)/dbname")
+	if err != nil {
+		panic(err)
+	}
+
+	defer db.Close()
+
+	res, err := db.Query(fmt.Sprintf("SELECT * from `articles` WHERE `id` = '%s'", vars["id"]))
+	if err != nil {
+		panic(err)
+	}
+
+	for res.Next() {
+		var post Article
+		err = res.Scan(&post.ID, &post.Title, &post.Anons, &post.FullText)
+		if err != nil {
+			panic(err)
+		}
+		showPost = post
+	}
+
+	template.ExecuteTemplate(w, "show", showPost)
 }
 
 
